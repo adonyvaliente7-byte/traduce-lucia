@@ -22,8 +22,8 @@ jobs:
 
     - name: Download models from Google Drive
       run: |
-        gdown --id 1C5xnHkKwhn_C3g3CTVb-7k545Fpt8rMl -O translate-es_en.argosmodel
-        gdown --id 1QStO5fRN5VeqBWfNBnzDkPSqtrvrnHSu -O translate-en_es.argosmodel
+        gdown 1C5xnHkKwhn_C3g3CTVb-7k545Fpt8rMl -O translate-es_en.argosmodel
+        gdown 1QStO5fRN5VeqBWfNBnzDkPSqtrvrnHSu -O translate-en_es.argosmodel
 
     - name: Create buildozer.spec
       run: |
