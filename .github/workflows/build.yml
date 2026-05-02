@@ -11,22 +11,14 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Install dependencies
+    - name: Download models from Google Drive
       run: |
-        sudo apt-get update
-        sudo apt-get install -y \
-          autoconf automake libtool build-essential \
-          zip unzip openjdk-17-jdk python3-pip \
-          libffi-dev libssl-dev cmake
-        pip install buildozer cython==0.29.33 gdown
+        pip install gdown
+        gdown 1C5xnHkKwhn_C3g3CTVb-7k545Fpt8rMl -O translate-es_en.argosmodel
+        gdown 1QStO5fRN5VeqBWfNBnzDkPSqtrvrnHSu -O translate-en_es.argosmodel
 
     - name: Rename main file
       run: mv traductor.py main.py
-
-    - name: Download models from Google Drive
-      run: |
-        gdown 1C5xnHkKwhn_C3g3CTVb-7k545Fpt8rMl -O translate-es_en.argosmodel
-        gdown 1QStO5fRN5VeqBWfNBnzDkPSqtrvrnHSu -O translate-en_es.argosmodel
 
     - name: Create buildozer.spec
       run: |
@@ -50,11 +42,15 @@ jobs:
         log_level = 2
         EOF
 
-    - name: Build APK
-      run: yes | buildozer android debug
+    - name: Build APK with Docker
+      uses: ArtemSBulgakov/buildozer-action@v1
+      id: buildozer
+      with:
+        command: android debug
+        buildozer_version: stable
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: traductor-apk
-        path: bin/*.apk
+        path: ${{ steps.buildozer.outputs.filename }}
