@@ -43,14 +43,6 @@ jobs:
         EOF
 
     - name: Build APK with Docker
-      uses: ArtemSBulgakov/buildozer-action@v1
-      id: buildozer
-      with:
-        command: android debug
-        buildozer_version: stable
-
-    - name: Upload APK
-      uses: actions/upload-artifact@v4
-      with:
-        name: traductor-apk
-        path: ${{ steps.buildozer.outputs.filename }}
+      run: |
+        docker run --rm \
+          -v ${{ github.works
