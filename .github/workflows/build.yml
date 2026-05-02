@@ -45,4 +45,12 @@ jobs:
     - name: Build APK with Docker
       run: |
         docker run --rm \
-          -v ${{ github.works
+          -v ${{ github.workspace }}:/home/user/hostcwd \
+          kivy/buildozer:latest \
+          android debug
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: traductor-apk
+        path: bin/*.apk
