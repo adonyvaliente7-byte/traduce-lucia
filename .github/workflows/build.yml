@@ -31,7 +31,7 @@ jobs:
         source.include_exts = py,argosmodel,png
         source.include_patterns = *.argosmodel,*.png
         version = 1.0
-        requirements = python3,kivy,argostranslate
+        requirements = python3,kivy==2.2.1,argostranslate
         icon.filename = icon-2.png
         orientation = portrait
         android.api = 33
@@ -41,14 +41,6 @@ jobs:
         [buildozer]
         log_level = 2
         EOF
-
-    - name: Accept Android licenses
-      run: |
-        docker run --rm \
-          -v ${{ github.workspace }}:/home/user/hostcwd \
-          --entrypoint /bin/bash \
-          kivy/buildozer:latest \
-          -c "yes | sdkmanager --licenses > /dev/null 2>&1 || true"
 
     - name: Build APK with Docker
       run: |
