@@ -47,7 +47,7 @@ jobs:
         docker run --rm \
           -v ${{ github.workspace }}:/home/user/hostcwd \
           --entrypoint /bin/bash \
-          kivy/buildozer:1.2 \
+          kivy/buildozer:latest \
           -c "cd /home/user/hostcwd && yes | buildozer android debug"
 
     - name: Upload APK
